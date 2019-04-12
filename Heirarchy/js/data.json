@@ -1,0 +1,62 @@
+{
+	"name": "Joe",
+	"values": {
+		"title": "Root",
+		"information": "Found at the base",
+		"data": "23000"
+	},
+	"children": [
+		{
+			"name": "Fred",
+			"values": {
+				"title": "Fred, Level 2",
+				"information": "First Child of Root",
+				"data": "2000"
+			},
+			"children": [
+				{
+					"name": "Jeremy",
+					"values": {
+						"title": "Jeremy, Level 3",
+						"information": "First Child of Fred",
+						"data": "200"
+					},
+					"children": [
+						{
+							"name": "Jill",
+							"values": {
+								"title": "Jill, Level 4",
+								"information": "First Child of Jeremy",
+								"data": "150"
+							}
+						}
+					]
+				},
+				{
+					"name": "Jenifer",
+					"values": {
+						"title": "Jenifer, Level 3",
+						"information": "Second Child of Fred",
+						"data": "220"
+					}
+				},
+				{
+					"name": "Jim",
+					"values": {
+						"title": "Jim, Level 3",
+						"information": "Third Child of Fred",
+						"data": "180"
+					}
+				}
+			]
+		},
+		{
+			"name": "Jerry",
+			"values": {
+				"title": "Jerry, Level 2",
+				"information": "2nd Child of Joe",
+				"data": "3000"
+			}
+		}
+	]
+}
