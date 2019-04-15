@@ -1,11 +1,5 @@
 import {updateDisplay} from './displayData.js'
-import {duration} from './index.js'
-
-//Append the image of the pin to the svg
-const pinImage = d3.select('#graph').append('image')
-	.attr('class', 'pinImage')
-	.attr('xlink:href', "pin.png")
-	.style('opacity', '0')
+import {duration, pinImage} from './index.js'
 
 let pinned, firstPin = true
 
@@ -37,10 +31,12 @@ function updatePinned(){
 				.style('x', `${pinned.y - 42}px`)
 				.style('y', `${pinned.x - 42}px`)
 		}
-	} else
+	} else{
 		pinImage.transition()
 			.duration(duration)
 			.style('opacity', '0')
+		updateDisplay({})	
+	}
 }
 
 function parentOfPinned(selected, pinnedParent, root) {

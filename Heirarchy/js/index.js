@@ -20,16 +20,15 @@ let svg = d3.select("body").append("svg")
     svg.attr("transform", d3.event.transform)
 	}))
 	.append("g")
-	.attr('class', 'graph')
+	.attr('id', 'graph')
 	.attr("transform", "translate("
 				+ margin.left + "," + margin.top + ")")
 
-export {
-	width,
-	height,
-	duration,
-	svg
-}
+//Append the image of the pin to the svg
+const pinImage = svg.append('image')
+	.attr('class', 'pinImage')
+	.attr('xlink:href', "pin.png")
+	.style('opacity', '0')
 
 d3.json('./js/data.json').then(data=>{
 	// Assigns parent, children, height, depth
@@ -52,4 +51,13 @@ function collapse(d) {
 		d._children.forEach(collapse)
 		d.children = null
 	}
+}
+
+export {
+	width,
+	height,
+	duration,
+	svg,
+	pinImage,
+	collapse
 }

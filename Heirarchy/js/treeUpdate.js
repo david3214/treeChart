@@ -1,11 +1,11 @@
-import {height, width, svg, duration} from './index.js'
+import {height, width, svg, collapse, duration} from './index.js'
 import {updatePinned, pin, parentOfPinned, pinned} from './pin.js'
 
 var runningId = 0
 
 export function update(source, root) {
 
-	let treemap = d3.tree().size([width, height])
+	let treemap = d3.tree().size([height, width])
 
 	// Assigns the x and y position for the nodes
 	let treeData = treemap(root)
@@ -17,7 +17,7 @@ export function update(source, root) {
 		links = treeData.descendants().slice(1)
 
 	// Normalize for fixed-depth.
-	nodes.forEach(function (d) { d.y = d.depth * (root.height < 4 ? width / root.height : width / 4) })
+	nodes.forEach(function (d) {return d.y = d.depth * width / 4})
 
 	// ****************** Nodes ***************************
 
@@ -26,12 +26,6 @@ export function update(source, root) {
 		.data(nodes, d => d.id || (d.id = ++runningId))
 
 	updateNodes(source, node, root)
-
-	// Store the old positions for transition.
-	nodes.forEach(function (d) {
-		d.x0 = d.x
-		d.y0 = d.y
-	})
 
 	// ****************** Links ***************************
 
@@ -43,6 +37,12 @@ export function update(source, root) {
 
 	// ****************** Pinned **************************
 	updatePinned()
+
+	// Store the old positions for transition.
+	nodes.forEach(function (d) {
+		d.x0 = d.x
+		d.y0 = d.y
+	})
 }
 
 function updateNodes(source, node, root){
@@ -115,7 +115,7 @@ function updateNodes(source, node, root){
 			selected.children = selected._children
 			selected._children = null
 		} else if (selected.data.color !== 'red'){
-			let randomNum = Math.floor(Math.random() * 3)
+			let randomNum = Math.floor(Math.random() * 1)
 			if(randomNum < 1){
 				let newChild = {
 					name: "Fred",
