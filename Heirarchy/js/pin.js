@@ -39,14 +39,14 @@ function updatePinned(){
 	}
 }
 
-function parentOfPinned(selected, pinnedParent, root) {
-	if (pinned == selected || !pinnedParent || pinned == root)
+function parentOfPinned(selected, pinnedParent) {
+	if (pinned == selected || !pinnedParent)
 		return false
 	else if (pinnedParent == selected){
 		console.log("Can't collapse parent of pinned element")
 		return true
 	}else
-		return parentOfPinned(selected, pinnedParent.parent, root)
+		return parentOfPinned(selected, pinnedParent.parent)
 }
 
 export {

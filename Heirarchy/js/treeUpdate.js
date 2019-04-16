@@ -1,16 +1,21 @@
-import {height, width, svg, collapse, duration} from './index.js'
-import {updatePinned, pin, parentOfPinned, pinned} from './pin.js'
+import {height, width, svg, duration, root} from './index.js'
+import {updatePinned, parentOfPinned, pinned} from './pin.js'
+import {menuFunc} from './displayData.js'
 
 var runningId = 0
 
-export function update(source, root) {
+export function update(source) {
+
+	// let treemap = d3.tree()
+	// 	.nodeSize([30,])
+	// 	.separation((function separation(a, b) {
+	// 			return 2
+	// 	}))
 
 	let treemap = d3.tree().size([height, width])
 
 	// Assigns the x and y position for the nodes
 	let treeData = treemap(root)
-
-	console.log({ root, source })
 
 	// Compute the new tree layout.
 	var nodes = treeData.descendants(),
@@ -53,7 +58,11 @@ function updateNodes(source, node, root){
         return "translate(" + source.y0 + "," + source.x0 + ")"
     })
 		.on('click', click)
-		// .on(`mouseover`, d=>updateDisplay(d.data.values))
+		.on('contextmenu', (d, i)=>{
+			//d3.contextMenu returns a function, normally the on function would then call it, 
+			// but we're already inside that function
+			d3.contextMenu( menuFunc(d) )(d, i)
+		})
 
   // Add Circle for the nodes
   nodeEnter.append('circle')
@@ -82,8 +91,8 @@ function updateNodes(source, node, root){
     .style("fill", function(d) {
 			if(d._children)
 				return "#92Ca91"
-			else if (d.data.color)
-				return d.data.color
+			else if (d.data.leaf)
+				return 'red'
 			else 
 				return "#fff"
     })
@@ -104,66 +113,16 @@ function updateNodes(source, node, root){
 
 	// Toggle children on click.
 	function click(selected) {
-		if(d3.event && d3.event.shiftKey)
-			pin(selected)
-		else if(parentOfPinned(selected, pinned.parent, root))
+		if(selected._children){
+			selected.children = selected._children
+			selected._children = null
+		} else if(parentOfPinned(selected, pinned.parent))
 			return
 		else if (selected.children) {
 			selected._children = selected.children
 			selected.children = null
-		} else if(selected._children){
-			selected.children = selected._children
-			selected._children = null
-		} else if (selected.data.color !== 'red'){
-			let randomNum = Math.floor(Math.random() * 1)
-			if(randomNum < 1){
-				let newChild = {
-					name: "Fred",
-					values: {
-						title: "Fred, Level 2",
-						information: ". . .",
-						data: "2000"
-					},
-					children: [
-						{
-							name: "Jeremy",
-							values: {
-								title: "Jeremy, Level 3",
-								information: "First Child of Fred",
-								data: "200"
-							},
-						},
-						{
-							name: "Jill",
-							values: {
-								title: "Jill, Level 4",
-								information: "First Child of Jeremy",
-								data: "150"
-							},
-						},
-					]
-				}
-				let newNode = d3.hierarchy(newChild, d=>d.children)
-				newNode.depth = selected.depth + 1
-				newNode.height = selected.height - 1
-				newNode.parent = selected
-
-				selected.children = []
-				selected.data.children = []
-
-				//Push it to parent.children array  
-				selected.children.push(newNode);
-				selected.data.children.push(newNode.data);
-
-				updateHeightDepth(root, 0)
-
-				selected.children.forEach(collapse)
-			} else {
-				selected.data.color = 'red'
-			}
-
-		}
-		update(selected, root)
+		} 
+		update(selected)
 	}
 }
 
@@ -205,7 +164,8 @@ export function updateLinks(source, link){
 	}
 }
 
-function updateHeightDepth(current, depth){
+
+export function updateHeightDepth(current, depth){
 	current.depth = depth
 	let height = 0
 	if (current.children || current._children) {
