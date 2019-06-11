@@ -1,18 +1,18 @@
 {
-  "name": "d3js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon --inspect app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "d3-context-menu": "^1.1.0",
-    "elgrapho": "^2.1.2",
-    "express": "^4.16.4",
-    "topojson": "^3.0.2"
-  }
+	"name": "d3js",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon --inspect app.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"d3-context-menu": "^1.1.0",
+		"elgrapho": "^2.1.2",
+		"express": "^4.16.4",
+		"topojson": "^3.0.2"
+	}
 }

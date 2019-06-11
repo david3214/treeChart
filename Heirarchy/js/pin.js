@@ -1,5 +1,5 @@
-import {updateDisplay} from './displayData.js'
-import {duration, pinImage} from './index.js'
+import { updateDisplay } from './displayData.js'
+import { duration, pinImage } from './index.js'
 
 let pinned, firstPin = true
 
@@ -7,52 +7,68 @@ function pin(node) {
 
 	if (pinned != node) {
 		pinned = node
-		updateDisplay(pinned.data.values)
+		updateDisplay(pinned.data.values, pinned)
 	} else {
 		firstPin = true
-		pinned = false
+		pinned = null
 	}
 }
 
-function updatePinned(){
+function updatePinned() {
 	//Display pin image next to pinned Node
-	if(pinned){
-		if(firstPin){
+	if (pinned) {
+		if (firstPin) {
 			firstPin = !firstPin
 			pinImage.style('x', `${pinned.y - 42}px`)
 				.style('y', `${pinned.x - 42}px`)
 				.transition()
 				.duration(duration)
 				.style('opacity', '1')
-			
-		}else{
+
+		} else {
 			pinImage.transition()
 				.duration(duration)
 				.style('x', `${pinned.y - 42}px`)
 				.style('y', `${pinned.x - 42}px`)
 		}
-	} else{
+	} else {
 		pinImage.transition()
 			.duration(duration)
 			.style('opacity', '0')
-		updateDisplay({})	
+		updateDisplay({}, pinned)
 	}
 }
 
 function parentOfPinned(selected, pinnedParent) {
 	if (pinned == selected || !pinnedParent)
 		return false
-	else if (pinnedParent == selected){
-		console.log("Can't collapse parent of pinned element")
+	else if (pinnedParent == selected)
 		return true
-	}else
+	else
 		return parentOfPinned(selected, pinnedParent.parent)
+}
+
+function checkParentOfPinned(selected) {
+	if (pinned)
+		return parentOfPinned(selected, pinned.parent)
+	return false
+}
+
+function childOfPinned(selected) {
+	if (!selected)
+		return false
+	else if (selected == pinned)
+		return true
+	else
+		return childOfPinned(selected.parent)
+
 }
 
 export {
 	updatePinned,
 	firstPin,
 	pin,
-	parentOfPinned,
-	pinned
+	checkParentOfPinned,
+	pinned,
+	childOfPinned
 }

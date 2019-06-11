@@ -1,33 +1,76 @@
 {
 	"name": "Joe",
 	"values": {
-		"title": "Root",
-		"information": "Found at the base",
-		"data": "23000"
+		"title": "Joe",
+		"information": "Found at the Root",
+		"data": "23000",
+		"sales": [
+			{
+				"id": "1",
+				"date": "04/17/19",
+				"amount": "20"
+			}
+		]
 	},
 	"children": [
 		{
 			"name": "Fred",
 			"values": {
-				"title": "Fred, Level 2",
+				"title": "Fred",
 				"information": "First Child of Root",
-				"data": "2000"
+				"data": "2000",
+				"sales": [
+					{
+						"id": "2",
+						"date": "04/17/19",
+						"amount": "50"
+					},
+					{
+						"id": "3",
+						"date": "04/17/19",
+						"amount": "40"
+					}
+				]
 			},
 			"children": [
 				{
 					"name": "Jeremy",
 					"values": {
-						"title": "Jeremy, Level 3",
+						"title": "Jeremy",
 						"information": "First Child of Fred",
-						"data": "200"
+						"data": "200",
+						"sales": [
+							{
+								"id": "3",
+								"date": "04/17/19",
+								"amount": "50"
+							}
+						]
 					},
 					"children": [
 						{
 							"name": "Jill",
 							"values": {
-								"title": "Jill, Level 4",
+								"title": "Jill",
 								"information": "First Child of Jeremy",
-								"data": "150"
+								"data": "150",
+								"sales": [
+									{
+										"id": "5",
+										"date": "04/17/19",
+										"amount": "20"
+									},
+									{
+										"id": "6",
+										"date": "04/17/19",
+										"amount": "70"
+									},
+									{
+										"id": "7",
+										"date": "04/17/19",
+										"amount": "30"
+									}
+								]
 							}
 						}
 					]
@@ -35,17 +78,36 @@
 				{
 					"name": "Jenifer",
 					"values": {
-						"title": "Jenifer, Level 3",
+						"title": "Jenifer",
 						"information": "Second Child of Fred",
-						"data": "220"
+						"data": "220",
+						"sales": [
+							{
+								"id": "8",
+								"date": "04/17/19",
+								"amount": "70"
+							}
+						]
 					}
 				},
 				{
 					"name": "Jim",
 					"values": {
-						"title": "Jim, Level 3",
+						"title": "Jim",
 						"information": "Third Child of Fred",
-						"data": "180"
+						"data": "180",
+						"sales": [
+							{
+								"id": "9",
+								"date": "04/17/19",
+								"amount": "75"
+							},
+							{
+								"id": "10",
+								"date": "04/17/19",
+								"amount": "62"
+							}
+						]
 					}
 				}
 			]
@@ -53,9 +115,31 @@
 		{
 			"name": "Jerry",
 			"values": {
-				"title": "Jerry, Level 2",
+				"title": "Jerry",
 				"information": "2nd Child of Joe",
-				"data": "3000"
+				"data": "3000",
+				"sales": [
+					{
+						"id": "11",
+						"date": "04/17/19",
+						"amount": "60"
+					},
+					{
+						"id": "12",
+						"date": "04/17/19",
+						"amount": "73"
+					},
+					{
+						"id": "13",
+						"date": "04/17/19",
+						"amount": "40"
+					},
+					{
+						"id": "14",
+						"date": "04/17/19",
+						"amount": "50"
+					}
+				]
 			}
 		}
 	]

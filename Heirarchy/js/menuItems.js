@@ -1,10 +1,11 @@
-import { pin, updatePinned, pinned, parentOfPinned} from "./pin.js";
-import {update, updateHeightDepth} from './treeUpdate.js'
-import {root, collapse} from './index.js'
+import { pin, updatePinned } from "./pin.js"
+import { update, updateHeightDepth } from './treeUpdate.js'
+import { root, collapse } from './index.js'
+import { updatePinnedDisplay, updateSalesTable, updateTeamMember } from "./displayData.js"
 
 let unPinMenu = {
 	title: 'UnPin Node',
-	action: function(elm, d, i){
+	action: function (elm, d, i) {
 		pin(d)
 		updatePinned()
 	}
@@ -12,16 +13,24 @@ let unPinMenu = {
 
 let pinMenu = {
 	title: 'Pin Node',
-	action: function(elm, d, i){
+	action: function (elm, d, i) {
 		pin(d)
 		updatePinned()
 	}
 }
 
+let displaySales = {
+	title: 'Display Sales',
+	action: function (elm, d, i) {
+		updateTeamMember(d.data.values)
+		updateSalesTable(d, d.data.values.sales)
+	}
+}
+
 let collapseMenu = {
 	title: 'Collapse Node',
-	action: function(elm, d, i){
-		if(d.children){
+	action: function (elm, d, i) {
+		if (d.children) {
 			d._children = d.children
 			d.children = null
 		}
@@ -31,8 +40,8 @@ let collapseMenu = {
 
 let expandMenu = {
 	title: 'Expand Node',
-	action: function(elm, d, i){
-		if(d._children){
+	action: function (elm, d, i) {
+		if (d._children) {
 			d.children = d._children
 			d._children = null
 		}
@@ -42,35 +51,50 @@ let expandMenu = {
 
 let loadChildrenMenu = {
 	title: 'Load Children',
-	action: function(elm, d, i){
-		if(d.depth < 4){
+	action: function (elm, d, i) {
+		if (d.depth < 4) {
 			let newChild = {
 				name: "Fred",
 				values: {
-					title: "Fred, Level 2",
+					title: "Fred",
 					information: ". . .",
-					data: "2000"
+					data: "2000",
+					sales: [{
+						id: "15+",
+						date: "04/17/19",
+						amount: "70"
+					}]
 				},
 				children: [
 					{
 						name: "Jeremy",
 						values: {
-							title: "Jeremy, Level 3",
+							title: "Jeremy",
 							information: "First Child of Fred",
-							data: "200"
+							data: "200",
+							sales: [{
+								id: "15+",
+								date: "04/17/19",
+								amount: "30"
+							}]
 						},
 					},
 					{
 						name: "Jill",
 						values: {
-							title: "Jill, Level 4",
+							title: "Jill",
 							information: "First Child of Jeremy",
-							data: "150"
+							data: "150",
+							sales: [{
+								id: "15+",
+								date: "04/17/19",
+								amount: "140"
+							}]
 						},
 					},
 				]
 			}
-			let newNode = d3.hierarchy(newChild, d=>d.children)
+			let newNode = d3.hierarchy(newChild, d => d.children)
 			newNode.depth = d.depth + 1
 			newNode.height = d.height - 1
 			newNode.parent = d
@@ -79,8 +103,8 @@ let loadChildrenMenu = {
 			d.data.children = []
 
 			//Push it to parent.children array  
-			d.children.push(newNode);
-			d.data.children.push(newNode.data);
+			d.children.push(newNode)
+			d.data.children.push(newNode.data)
 
 			updateHeightDepth(root, 0)
 
@@ -88,6 +112,7 @@ let loadChildrenMenu = {
 		} else {
 			d.data.leaf = true
 		}
+		updatePinnedDisplay()
 		update(d)
 	}
 }
@@ -98,4 +123,5 @@ export {
 	pinMenu,
 	unPinMenu,
 	loadChildrenMenu,
+	displaySales
 }
